@@ -8,8 +8,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Router;
 use Illuminate\Validation\Validator;
-use Illuminate\Support\ServiceProvider;
 use GraphQL\Type\Definition\ResolveInfo;
+use Nuwave\Lighthouse\Console\IdeHelperCommand;
+use Nuwave\Lighthouse\GraphQL;
+use Nuwave\Lighthouse\Schema\AST\ASTBuilder;
 use Nuwave\Lighthouse\Schema\NodeRegistry;
 use Nuwave\Lighthouse\Schema\TypeRegistry;
 use Nuwave\Lighthouse\Console\QueryCommand;
@@ -32,7 +34,7 @@ use Nuwave\Lighthouse\Console\SubscriptionCommand;
 use Nuwave\Lighthouse\Execution\LighthouseRequest;
 use Nuwave\Lighthouse\Schema\Source\SchemaStitcher;
 use Nuwave\Lighthouse\Console\ValidateSchemaCommand;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
+//use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Nuwave\Lighthouse\Execution\MultipartFormRequest;
 use Illuminate\Validation\Factory as ValidationFactory;
 use Nuwave\Lighthouse\Support\Contracts\CreatesContext;
@@ -49,31 +51,34 @@ use Nuwave\Lighthouse\Support\Compatibility\LaravelMiddlewareAdapter;
 use Nuwave\Lighthouse\Support\Contracts\GlobalId as GlobalIdContract;
 use Nuwave\Lighthouse\Support\Contracts\ProvidesSubscriptionResolver;
 
+use Illuminate\Support\ServiceProvider;
+use October\Rain\Config\Repository as ConfigRepository;
+
 class LighthouseServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
      *
      * @param  \Illuminate\Validation\Factory  $validationFactory
-     * @param  \Illuminate\Config\Repository  $configRepository
+     * @param  \Illuminate\Contracts\Config\Repository  $configRepository
      * @return void
      */
-    public function boot(ValidationFactory $validationFactory, ConfigRepository $configRepository): void
+    public function boot(ValidationFactory $validationFactory, \Illuminate\Contracts\Config\Repository $configRepository): void
     {
-        // $this->publishes([
-        //     __DIR__.'/../config/config.php' => $this->app->make('path.config').DIRECTORY_SEPARATOR.'lighthouse.php',
-        // ], 'config');
+        $this->publishes([
+            __DIR__.'/../config/config.php' => $this->app->make('path.config').'/lighthouse.php',
+        ], 'config');
 
-        // $this->publishes([
-        //     __DIR__.'/../assets/default-schema.graphql' => $configRepository->get('lighthouse.schema.register'),
-        // ], 'schema');
+        $this->publishes([
+            __DIR__.'/../assets/default-schema.graphql' => $configRepository->get('lighthouse.schema.register'),
+        ], 'schema');
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
 
         $validationFactory->resolver(
             function ($translator, array $data, array $rules, array $messages, array $customAttributes): Validator {
                 // This determines whether we are resolving a GraphQL field
-                return Arr::get($customAttributes, 'resolveInfo') instanceof ResolveInfo
+                return Arr::has($customAttributes, ['root', 'context', 'resolveInfo'])
                     ? new GraphQLValidator($translator, $data, $rules, $messages, $customAttributes)
                     : new Validator($translator, $data, $rules, $messages, $customAttributes);
             }
@@ -104,13 +109,10 @@ class LighthouseServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
-        $this->app['config']->set('lighthouse', $this->app['config']->get('uit.lighthouse::config'));
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'lighthouse');
 
         $this->app->singleton(GraphQL::class);
-        /* @deprecated */
-        $this->app->alias(GraphQL::class, 'graphql');
-
+        $this->app->singleton(ASTBuilder::class);
         $this->app->singleton(DirectiveFactory::class);
         $this->app->singleton(NodeRegistry::class);
         $this->app->singleton(TypeRegistry::class);
@@ -125,10 +127,12 @@ class LighthouseServiceProvider extends ServiceProvider
             /** @var \Illuminate\Http\Request $request */
             $request = $app->make('request');
 
-            return Str::startsWith(
+            $isMultipartFormRequest = Str::startsWith(
                 $request->header('Content-Type'),
                 'multipart/form-data'
-            )
+            );
+
+            return $isMultipartFormRequest
                 ? new MultipartFormRequest($request)
                 : new LighthouseRequest($request);
         });
@@ -145,8 +149,8 @@ class LighthouseServiceProvider extends ServiceProvider
                 public function provideSubscriptionResolver(FieldValue $fieldValue): Closure
                 {
                     throw new Exception(
-                       'Add the SubscriptionServiceProvider to your config/app.php to enable subscriptions.'
-                   );
+                        'Add the SubscriptionServiceProvider to your config/app.php to enable subscriptions.'
+                    );
                 }
             };
         });
@@ -169,6 +173,7 @@ class LighthouseServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ClearCacheCommand::class,
+                IdeHelperCommand::class,
                 InterfaceCommand::class,
                 MutationCommand::class,
                 PrintSchemaCommand::class,
@@ -177,6 +182,10 @@ class LighthouseServiceProvider extends ServiceProvider
                 SubscriptionCommand::class,
                 UnionCommand::class,
                 ValidateSchemaCommand::class,
+            ]);
+        } else {
+            $this->commands([
+                ValidateSchemaCommand::class
             ]);
         }
     }

@@ -1,13 +1,14 @@
 {
     "name": "uit/lighthouse",
     "type": "october-plugin",
+    "description": "",
     "require": {
-        "nuwave/lighthouse": "^3.7"
+        "nuwave/lighthouse": "^4.5"
     },
     "extra": {
         "laravel": {
             "dont-discover": [
-                "nuwave/lighthouse"
+                "*"
             ]
         }
     }

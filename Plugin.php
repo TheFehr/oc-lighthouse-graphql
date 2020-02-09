@@ -1,10 +1,10 @@
 <?php namespace Uit\Lighthouse;
 
 use App;
+use Backend;
+use Validator;
 use System\Classes\PluginBase;
-use Illuminate\Config\Repository\Config;
-
-
+use Uit\Lighthouse\Rules\ValidSchema;
 
 class Plugin extends PluginBase
 {
@@ -12,12 +12,10 @@ class Plugin extends PluginBase
     {
     }
 
-    public function registerSettings()
-    {
-    }
-
     public function boot()
     {
+        Validator::extend('validSchema', ValidSchema::class);
+
         App::register('\Uit\Lighthouse\Provider\LighthouseServiceProvider');
         //AliasLoader::getInstance()->alias('Socialite', 'Laravel\Socialite\Facades\Socialite');
 
@@ -36,5 +34,17 @@ class Plugin extends PluginBase
 
     }
 
-
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label'       => 'GraphQL',
+                'description' => 'Manage GraphQL Server.',
+                'category'    => 'GraphQL',
+                'icon'        => 'icon-globe',
+                'class'       => 'Uit\Lighthouse\Models\Settings',
+                'order'       => 500
+            ]
+        ];
+    }
 }

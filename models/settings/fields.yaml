@@ -1,0 +1,8 @@
+fields:
+  base_schema:
+    label: 'uit.lighthouse::lang.models.base_schema.single'
+    size: huge
+    language: plain_text
+    span: left
+    type: codeeditor
+    tab: 'Tab 1'

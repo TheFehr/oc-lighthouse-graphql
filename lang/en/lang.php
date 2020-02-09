@@ -12,6 +12,12 @@
                 'name' => 'Name',
                 'schema' => 'Schema'
             ]
+        ],
+        'base_schema' => [
+            'single' => 'Base Schema',
+            'attributes' => [
+                'schema' => 'schema'
+            ]
         ]
     ],
     'global' => [
