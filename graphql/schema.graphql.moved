@@ -1,8 +1,0 @@
-type Schema {
-    id: ID!
-    name: String!
-    active: Boolean!
-    schema: String!
-    created_at: String!
-    updated_at: String!
-}

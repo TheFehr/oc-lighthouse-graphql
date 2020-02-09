@@ -16,8 +16,10 @@ class SchemaBuilder
         \File::put(plugins_path('uit/lighthouse/graphql/schema.graphql'), $schemesBody);
     }
 
-    public static function validationBuild($changedSchema)
+    public static function validationBuild($changedSchemaId, $newSchemaValue)
     {
-
+        $schemes = Schema::published()->whereNot('id', $changedSchemaId)->get();
+        $schemesBody = Settings::get('base_schema') . $schemes->implode("schema", "\n") . $newSchemaValue;
+        \File::put(plugins_path('uit/lighthouse/graphql/schema.graphql'), $schemesBody);
     }
 }

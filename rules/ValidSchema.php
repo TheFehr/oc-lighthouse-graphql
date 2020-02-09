@@ -2,11 +2,15 @@
 namespace Uit\Lighthouse\Rules;
 
 use Artisan;
+use Log;
 use Illuminate\Contracts\Validation\Rule;
+use Nuwave\Lighthouse\Exceptions\DefinitionException;
+use October\Rain\Exception\ValidationException;
 use Uit\Lighthouse\Classes\SchemaBuilder;
 
 class ValidSchema implements Rule
 {
+    private $exception;
 
     /**
      * Determine if the validation rule passes.
@@ -14,32 +18,36 @@ class ValidSchema implements Rule
      * @param string $attribute
      * @param mixed $value
      * @return bool
+     * @throws ValidationException
      */
     public function passes($attribute, $value)
     {
-//        try {
-            traceLog('validation schema...');
+        try {
             Artisan::call('lighthouse:validate-schema');
-            traceLog('done validating schema ...');
-
             return true;
-//        } catch (Exception $_) {
-//            return false;
-//        }
+        } catch (DefinitionException $definitionException) {
+            throw new ValidationException([$attribute => "The defined schema is not valid:\n" . $definitionException->getMessage()]);
+        }
     }
 
     /**
      * Validation callback method.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @param  array  $params
+     * @param string $attribute
+     * @param mixed $value
+     * @param array $params
      * @return bool
+     * @throws ValidationException
      */
     public function validate($attribute, $value, $params)
     {
-        return new \Exception(var_export([$attribute, $value, $params], true));
-        return $this->passes($attribute, SchemaBuilder::build());
+        Log::info(var_export($params, true));
+        $changeSchemaId = $params[0];
+        \File::move(plugins_path('uit/lighthouse/graphql/schema.graphql'), plugins_path('uit/lighthouse/graphql/schema.graphql.valid'));
+        SchemaBuilder::validationBuild($changeSchemaId, $value);
+        $valid = $this->passes($attribute, $value);
+        \File::move(plugins_path('uit/lighthouse/graphql/schema.graphql.valid'), plugins_path('uit/lighthouse/graphql/schema.graphql'));
+        return $valid;
     }
 
     /**
@@ -49,6 +57,6 @@ class ValidSchema implements Rule
      */
     public function message()
     {
-        // TODO: Implement message() method.
+        return $this->exception->getMessage();
     }
 }

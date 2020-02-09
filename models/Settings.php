@@ -14,6 +14,13 @@ class Settings extends Model
     // Reference to field configuration
     public $settingsFields = 'fields.yaml';
 
+    /**
+     * @var array Validation rules
+     */
+    public $rules = [
+        'base_schema' => 'validSchema'
+    ];
+
     public function afterSave() {
         SchemaBuilder::build();
     }
