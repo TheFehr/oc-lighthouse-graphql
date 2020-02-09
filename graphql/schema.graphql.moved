@@ -1,14 +1,8 @@
-type Query {
-    users: [User!]! @all
-    schemas: [Schema!]! @all
-}type Schema {
+type Schema {
     id: ID!
     name: String!
     active: Boolean!
     schema: String!
     created_at: String!
     updated_at: String!
-}
-type User {
-  id: ID!
 }

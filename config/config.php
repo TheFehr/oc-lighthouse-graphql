@@ -22,7 +22,7 @@ return [
     |
      */
 
-    'route_enable_get' => true,
+    'route_enable_get' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
      */
 
     'namespaces' => [
-        'models' => ['App', 'App\\Models'],
+        'models' => 'Uit\Lighthouse\Models',
         'queries' => 'App\\GraphQL\\Queries',
         'mutations' => 'App\\GraphQL\\Mutations',
         'subscriptions' => 'App\\GraphQL\\Subscriptions',
@@ -180,7 +180,7 @@ return [
     |
      */
 
-    'controller' => \Uit\Lighthouse\Http\Controllers\GraphQLController::class . '@query',
+    'controller' => \Nuwave\Lighthouse\Support\Http\Controllers\GraphQLController::class . '@query',
 
     /*
     |--------------------------------------------------------------------------

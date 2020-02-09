@@ -1,6 +1,7 @@
 <?php namespace Uit\Lighthouse\Models;
 
 use Model;
+use Uit\Lighthouse\Classes\SchemaBuilder;
 
 /**
  * Model
@@ -19,23 +20,14 @@ class Schema extends Model
      * @var array Validation rules
      */
     public $rules = [
+        'schema' => 'validSchema'
     ];
 
     public function scopePublished($query){
         return $query->where('published', true);
     }
 
-    public function afterSave(){
-
-        $schemesBody = '';
-        $schemes = Schema::published()->get();
-        foreach ($schemes as $schema) {
-            $schemesBody .= $schema->schema;
-        }
-
-
-        $result = \File::put(plugins_path('uit/lighthouse/graphql/schema.graphql'), $schemesBody);
-
-
+    public function afterSave() {
+        SchemaBuilder::build();
     }
 }
