@@ -10,8 +10,6 @@ use Uit\Lighthouse\Classes\SchemaBuilder;
 
 class ValidSchema implements Rule
 {
-    private $exception;
-
     /**
      * Determine if the validation rule passes.
      *
@@ -57,6 +55,6 @@ class ValidSchema implements Rule
      */
     public function message()
     {
-        return $this->exception->getMessage();
+        return "The defined schema is not valid";
     }
 }

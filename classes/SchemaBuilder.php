@@ -7,6 +7,7 @@ namespace Uit\Lighthouse\Classes;
 use Uit\Lighthouse\Models\Schema;
 use Uit\Lighthouse\Models\Settings;
 
+
 class SchemaBuilder
 {
     public static function build()
