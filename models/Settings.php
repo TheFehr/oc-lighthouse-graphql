@@ -17,11 +17,9 @@ class Settings extends Model
     /**
      * @var array Validation rules
      */
-    public $rules = [
-        'base_schema' => 'validSchema'
-    ];
+    public $rules = [];
 
     public function afterSave() {
-        SchemaBuilder::build();
+        SchemaBuilder::build(Config::get('uit.lighthouse::schema.register'));
     }
 }

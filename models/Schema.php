@@ -1,5 +1,6 @@
 <?php namespace Uit\Lighthouse\Models;
 
+use Config;
 use Model;
 use Input;
 use Uit\Lighthouse\Rules\ValidSchema;
@@ -31,7 +32,7 @@ class Schema extends Model
 
     public function afterSave()
     {
-        SchemaBuilder::build();
+        SchemaBuilder::build(Config::get('uit.lighthouse::schema.register'));
         parent::afterSave();
     }
 

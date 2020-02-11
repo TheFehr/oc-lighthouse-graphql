@@ -7,6 +7,7 @@ use Log;
 use Illuminate\Contracts\Validation\Rule;
 use Nuwave\Lighthouse\Exceptions\DefinitionException;
 use October\Rain\Exception\ValidationException;
+use Config;
 use Uit\Lighthouse\Classes\SchemaBuilder;
 
 class ValidSchema implements Rule
@@ -37,16 +38,15 @@ class ValidSchema implements Rule
     public function validate($attribute, $value, $params)
     {
         $valid = false;
-        $validFilePath = plugins_path('uit/lighthouse/graphql/schema.graphql');
-        $validFileBackupPath = plugins_path('uit/lighthouse/graphql/schema.graphql.valid');
+        $validFilePath = Config::get('uit.lighthouse::schema.register');
+        $validFileBackupPath = $validFilePath . ".valid";
 
-        Log::info(var_export($params, true));
         $changeSchemaId = $params[0];
         if (\File::exists($validFilePath)) {
             \File::move($validFilePath, $validFileBackupPath);
         }
         try {
-            SchemaBuilder::validationBuild($changeSchemaId, $value);
+            SchemaBuilder::validationBuild($changeSchemaId, $value, $validFilePath);
             $valid = $this->passes($attribute, $value);
         } catch (DefinitionException $definitionException) {
             if (\File::exists($validFileBackupPath)) {

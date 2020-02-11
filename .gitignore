@@ -1,1 +1,3 @@
 graphql/*.graphql
+
+graphql/schema.graphql.valid

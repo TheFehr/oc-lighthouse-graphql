@@ -10,17 +10,17 @@ use Uit\Lighthouse\Models\Settings;
 
 class SchemaBuilder
 {
-    public static function build()
+    public static function build($path)
     {
         $schemes = Schema::published()->get();
-        $schemesBody = Settings::get('base_schema') . $schemes->implode("schema", "\n");
-        \File::put(plugins_path('uit/lighthouse/graphql/schema.graphql'), $schemesBody);
+        $schemesBody = Settings::get('base_schema') . "\n" . $schemes->implode("schema", "\n");
+        \File::put($path, $schemesBody);
     }
 
-    public static function validationBuild($changedSchemaId, $newSchemaValue)
+    public static function validationBuild($changedSchemaId, $newSchemaValue, $path)
     {
         $schemes = Schema::published()->whereNot('id', $changedSchemaId)->get();
-        $schemesBody = Settings::get('base_schema') . $schemes->implode("schema", "\n") . $newSchemaValue;
-        \File::put(plugins_path('uit/lighthouse/graphql/schema.graphql'), $schemesBody);
+        $schemesBody = Settings::get('base_schema') . "\n" . $schemes->implode("schema", "\n") . $newSchemaValue;
+        \File::put($path, $schemesBody);
     }
 }
