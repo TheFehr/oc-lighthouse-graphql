@@ -1,4 +1,5 @@
 <?php
+
 namespace Uit\Lighthouse\Rules;
 
 use Artisan;
@@ -20,12 +21,8 @@ class ValidSchema implements Rule
      */
     public function passes($attribute, $value)
     {
-        try {
-            Artisan::call('lighthouse:validate-schema');
-            return true;
-        } catch (DefinitionException $definitionException) {
-            throw new ValidationException([$attribute => "The defined schema is not valid:\n" . $definitionException->getMessage()]);
-        }
+        Artisan::call('lighthouse:validate-schema');
+        return true;
     }
 
     /**
@@ -39,12 +36,25 @@ class ValidSchema implements Rule
      */
     public function validate($attribute, $value, $params)
     {
+        $valid = false;
+        $validFilePath = plugins_path('uit/lighthouse/graphql/schema.graphql');
+        $validFileBackupPath = plugins_path('uit/lighthouse/graphql/schema.graphql.valid');
+
         Log::info(var_export($params, true));
         $changeSchemaId = $params[0];
-        \File::move(plugins_path('uit/lighthouse/graphql/schema.graphql'), plugins_path('uit/lighthouse/graphql/schema.graphql.valid'));
-        SchemaBuilder::validationBuild($changeSchemaId, $value);
-        $valid = $this->passes($attribute, $value);
-        \File::move(plugins_path('uit/lighthouse/graphql/schema.graphql.valid'), plugins_path('uit/lighthouse/graphql/schema.graphql'));
+        if (\File::exists($validFilePath)) {
+            \File::move($validFilePath, $validFileBackupPath);
+        }
+        try {
+            SchemaBuilder::validationBuild($changeSchemaId, $value);
+            $valid = $this->passes($attribute, $value);
+        } catch (DefinitionException $definitionException) {
+            if (\File::exists($validFileBackupPath)) {
+                \File::move($validFileBackupPath, $validFilePath);
+            }
+            throw new ValidationException([$attribute => "The defined schema is not valid:\n" . $definitionException->getMessage()]);
+        }
+
         return $valid;
     }
 
