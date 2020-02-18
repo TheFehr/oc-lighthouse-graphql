@@ -1,5 +1,6 @@
 {
     "name": "thefehr/lighthouse",
+    "license": "MIT",
     "type": "october-plugin",
     "description": "",
     "require": {

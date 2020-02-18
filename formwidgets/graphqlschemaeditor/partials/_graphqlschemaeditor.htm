@@ -1,8 +1,33 @@
-<h2>My graphql schema editor</h2>
 <div id="graphqleditor" style="height: 70vh"></div>
-<input type="text" id="<?= $this->getId('input') ?>" hidden="hidden" value="<?= $value ?>">
+<textarea style="height: 100%; width: 100%; display: block"
+          name="<?= $name ?>"
+          id="<?= $this->getId('input') ?>"><?= $value ?></textarea>
 <script>
     var graphqlEditorValueId = "<?= $this->getId('input') ?>";
     var myRuntimePublicPath = "<?= $webpackAssetsUrl ?>"
+    var lighthouseLibrary = `
+        directive @all(
+          """
+          Specify the class name of the model to use.
+          This is only needed when the default model detection does not work.
+          """
+          model: String
+
+          """
+          Apply scopes to the underlying query.
+          """
+          scopes: [String!]
+        ) on FIELD_DEFINITION
+        `;
 </script>
 <script src="<?= $webpackUrl ?>"></script>
+<style>
+    #graphqleditor > * {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+
+        box-sizing: border-box;
+    }
+</style>

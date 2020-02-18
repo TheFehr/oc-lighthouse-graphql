@@ -38,8 +38,8 @@ class GraphQLSchemaEditor extends FormWidgetBase
         $this->vars['name'] = $this->formField->getName();
         $this->vars['value'] = $this->getLoadValue();
         $this->vars['model'] = $this->model;
-        $this->vars['webpackAssetsUrl'] = asset('plugins/thefehr/lighthouse/formwidgets/graphqlschemaeditor/assets/');
-        $this->vars['webpackUrl'] = asset('plugins/thefehr/lighthouse/formwidgets/graphqlschemaeditor/assets/graphqlschemaeditor.js');
+        $this->vars['webpackAssetsUrl'] = asset('/plugins/thefehr/lighthouse/formwidgets/graphqlschemaeditor/assets/');
+        $this->vars['webpackUrl'] = asset('/plugins/thefehr/lighthouse/formwidgets/graphqlschemaeditor/assets/graphqlschemaeditor.js');
     }
 
     /**
