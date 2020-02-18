@@ -49,7 +49,6 @@ module.exports = {
     entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'assets'),
-        filename: 'graphqlschemaeditor.js',
-        publicPath: "http://localhost:8080/plugins/thefehr/lighthouse/formwidgets/graphqlschemaeditor/assets/"
+        filename: 'graphqlschemaeditor.js'
     }
 };

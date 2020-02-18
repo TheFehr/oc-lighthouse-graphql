@@ -25,6 +25,8 @@ export const UIDiagramFull = style({
 
 // @ts-ignore
 const schemaInput = document.getElementById(graphqlEditorValueId) as HTMLInputElement;
+// @ts-ignore
+__webpack_public_path__ = myRuntimePublicPath;
 
 export const App = () => {
     const [mySchema] = useState({
