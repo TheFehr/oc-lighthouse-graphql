@@ -1,12 +1,12 @@
-<?php namespace Uit\Lighthouse\Models;
+<?php namespace TheFehr\Lighthouse\Models;
 
 use Config;
 use Model;
 use Input;
-use Uit\Lighthouse\Rules\ValidSchema;
+use TheFehr\Lighthouse\Rules\ValidSchema;
 use Validator;
 use Log;
-use Uit\Lighthouse\Classes\SchemaBuilder;
+use TheFehr\Lighthouse\Classes\SchemaBuilder;
 
 /**
  * Model
@@ -32,7 +32,7 @@ class Schema extends Model
 
     public function afterSave()
     {
-        SchemaBuilder::build(Config::get('uit.lighthouse::schema.register'));
+        SchemaBuilder::build(Config::get('thefehr.lighthouse::schema.register'));
         parent::afterSave();
     }
 

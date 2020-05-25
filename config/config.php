@@ -58,7 +58,7 @@ return [
      */
 
     'schema' => [
-        'register' => plugins_path('uit/lighthouse/graphql/schema.graphql'),
+        'register' => plugins_path('thefehr/lighthouse/graphql/schema.graphql'),
     ],
 
     /*
@@ -90,7 +90,7 @@ return [
      */
 
     'namespaces' => [
-        'models' => 'Uit\Lighthouse\Models',
+        'models' => 'TheFehr\Lighthouse\Models',
         'queries' => 'App\\GraphQL\\Queries',
         'mutations' => 'App\\GraphQL\\Mutations',
         'subscriptions' => 'App\\GraphQL\\Subscriptions',

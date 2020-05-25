@@ -1,8 +1,9 @@
 <?php
-namespace Uit\Lighthouse\Models;
+namespace TheFehr\Lighthouse\Models;
 
+use Config;
 use Model;
-use Uit\Lighthouse\Classes\SchemaBuilder;
+use TheFehr\Lighthouse\Classes\SchemaBuilder;
 
 class Settings extends Model
 {
@@ -20,6 +21,6 @@ class Settings extends Model
     public $rules = [];
 
     public function afterSave() {
-        SchemaBuilder::build(Config::get('uit.lighthouse::schema.register'));
+        SchemaBuilder::build(Config::get('thefehr.lighthouse::schema.register'));
     }
 }

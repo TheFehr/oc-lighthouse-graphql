@@ -1,4 +1,4 @@
-<?php namespace Uit\Lighthouse\Controllers;
+<?php namespace TheFehr\Lighthouse\Controllers;
 
 use Backend\Classes\Controller;
 use BackendMenu;
@@ -13,6 +13,6 @@ class Schemes extends Controller
     public function __construct()
     {
         parent::__construct();
-        BackendMenu::setContext('Uit.Lighthouse', 'main-menu-item');
+        BackendMenu::setContext('TheFehr.Lighthouse', 'main-menu-item');
     }
 }

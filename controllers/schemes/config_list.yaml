@@ -1,7 +1,7 @@
-title: 'uit.lighthouse::lang.models.schema.plural'
-modelClass: Uit\Lighthouse\Models\Schema
-list: $/uit/lighthouse/models/schema/columns.yaml
-recordUrl: 'uit/lighthouse/schemes/update/:id'
+title: 'thefehr.lighthouse::lang.models.schema.plural'
+modelClass: TheFehr\Lighthouse\Models\Schema
+list: $/thefehr/lighthouse/models/schema/columns.yaml
+recordUrl: 'thefehr/lighthouse/schemes/update/:id'
 noRecordsMessage: 'backend::lang.list.no_records'
 recordsPerPage: 20
 showSetup: true

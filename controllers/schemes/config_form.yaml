@@ -1,11 +1,11 @@
-name: 'uit.lighthouse::lang.models.schema.single'
-modelClass: Uit\Lighthouse\Models\Schema
-form: $/uit/lighthouse/models/schema/fields.yaml
-defaultRedirect: uit/lighthouse/schemes
+name: 'thefehr.lighthouse::lang.models.schema.single'
+modelClass: TheFehr\Lighthouse\Models\Schema
+form: $/thefehr/lighthouse/models/schema/fields.yaml
+defaultRedirect: thefehr/lighthouse/schemes
 create:
-    redirect: 'uit/lighthouse/schemes/update/:id'
-    redirectClose: uit/lighthouse/schemes
+    redirect: 'thefehr/lighthouse/schemes/update/:id'
+    redirectClose: thefehr/lighthouse/schemes
 update:
-    redirect: uit/lighthouse/schemes
-    redirectClose: uit/lighthouse/schemes
+    redirect: thefehr/lighthouse/schemes
+    redirectClose: thefehr/lighthouse/schemes
 preview: {  }

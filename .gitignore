@@ -1,3 +1,5 @@
 graphql/*.graphql
 
 graphql/schema.graphql.valid
+
+node_modules/

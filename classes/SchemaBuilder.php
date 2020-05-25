@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Uit\Lighthouse\Classes;
+namespace TheFehr\Lighthouse\Classes;
 
 
-use Uit\Lighthouse\Models\Schema;
-use Uit\Lighthouse\Models\Settings;
+use TheFehr\Lighthouse\Models\Schema;
+use TheFehr\Lighthouse\Models\Settings;
 
 
 class SchemaBuilder

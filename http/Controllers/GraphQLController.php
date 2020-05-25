@@ -1,6 +1,6 @@
 <?php
 
-namespace Uit\Lighthouse\Http\Controllers;
+namespace TheFehr\Lighthouse\Http\Controllers;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher as EventsDispatcher;

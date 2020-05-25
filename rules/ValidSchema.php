@@ -1,6 +1,6 @@
 <?php
 
-namespace Uit\Lighthouse\Rules;
+namespace TheFehr\Lighthouse\Rules;
 
 use Artisan;
 use Log;
@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Rule;
 use Nuwave\Lighthouse\Exceptions\DefinitionException;
 use October\Rain\Exception\ValidationException;
 use Config;
-use Uit\Lighthouse\Classes\SchemaBuilder;
+use TheFehr\Lighthouse\Classes\SchemaBuilder;
 
 class ValidSchema implements Rule
 {
@@ -38,7 +38,7 @@ class ValidSchema implements Rule
     public function validate($attribute, $value, $params)
     {
         $valid = false;
-        $validFilePath = Config::get('uit.lighthouse::schema.register');
+        $validFilePath = Config::get('thefehr.lighthouse::schema.register');
         $validFileBackupPath = $validFilePath . ".valid";
 
         $changeSchemaId = $params[0];

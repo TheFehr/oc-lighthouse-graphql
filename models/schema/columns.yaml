@@ -3,8 +3,8 @@ columns:
         label: ID
         type: text
     name:
-        label: 'uit.lighthouse::lang.models.schema.attributes.name'
+        label: 'thefehr.lighthouse::lang.models.schema.attributes.name'
         type: text
     updated_at:
-        label: 'uit.lighthouse::lang.global.updated_at'
+        label: 'thefehr.lighthouse::lang.global.updated_at'
         type: datetime

@@ -1,4 +1,4 @@
-<?php namespace Uit\Lighthouse\Updates;
+<?php namespace TheFehr\Lighthouse\Updates;
 
 use Schema;
 use October\Rain\Database\Updates\Migration;

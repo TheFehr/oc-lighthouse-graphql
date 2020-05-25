@@ -1,6 +1,6 @@
 <?php
 
-namespace Uit\Lighthouse\Provider;
+namespace TheFehr\Lighthouse\Provider;
 
 use Closure;
 use Exception;

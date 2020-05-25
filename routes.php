@@ -3,11 +3,11 @@
 ///** @var \Illuminate\Contracts\Routing\Registrar $router */
 //$router = app('router');
 //
-//$router->group(config('uit.lighthouse::route', []), function () use ($router): void {
-//    $routeName = config('uit.lighthouse::route_name', 'graphql');
-//    $controller = config('uit.lighthouse::controller');
+//$router->group(config('thefehr.lighthouse::route', []), function () use ($router): void {
+//    $routeName = config('thefehr.lighthouse::route_name', 'graphql');
+//    $controller = config('thefehr.lighthouse::controller');
 //
-//    $methods = config('uit.lighthouse::route_enable_get', false)
+//    $methods = config('thefehr.lighthouse::route_enable_get', false)
 //    ? ['GET', 'POST']
 //    : ['POST'];
 //
@@ -17,11 +17,11 @@
 //    ]);
 //});
 
-Route::group(config('uit.lighthouse::route', []), function () : void {
-    $routeName = config('uit.lighthouse::route_name', 'graphql');
-    $controller = config('uit.lighthouse::controller');
+Route::group(config('thefehr.lighthouse::route', []), function () : void {
+    $routeName = config('thefehr.lighthouse::route_name', 'graphql');
+    $controller = config('thefehr.lighthouse::controller');
 
-    $methods = config('uit.lighthouse::route_enable_get', false)
+    $methods = config('thefehr.lighthouse::route_enable_get', false)
     ? ['GET', 'POST']
     : ['POST'];
 
@@ -35,7 +35,7 @@ Route::group(config('uit.lighthouse::route', []), function () : void {
  Route::get('graphql/schema.graphql', function(){
 
      $schemesBody = '';
-     $schemes = \Uit\Lighthouse\Models\Schema::published()->get();
+     $schemes = \TheFehr\Lighthouse\Models\Schema::published()->get();
      foreach ($schemes as $schema) {
          $schemesBody .= $schema->schema;
      }

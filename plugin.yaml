@@ -1,11 +1,11 @@
 plugin:
-    name: 'uit.lighthouse::lang.plugin.name'
-    description: 'uit.lighthouse::lang.plugin.description'
-    author: Uit
+    name: 'thefehr.lighthouse::lang.plugin.name'
+    description: 'thefehr.lighthouse::lang.plugin.description'
+    author: Uit, TheFehr
     icon: oc-icon-share-alt
     homepage: ''
 navigation:
     main-menu-item:
-        label: 'uit.lighthouse::lang.models.schema.plural'
-        url: uit/lighthouse/schemes
+        label: 'thefehr.lighthouse::lang.models.schema.plural'
+        url: thefehr/lighthouse/schemes
         icon: icon-share-alt
