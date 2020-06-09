@@ -32,6 +32,15 @@ class Plugin extends PluginBase
     				return 'The YAML file could not be written.';
     	    }     	    
         });
+    } 
+    
+    public function registerPermissions()
+    {
+        return [
+            'rainlab.builder.manage_schemas' => [
+                'tab' => 'rainlab.builder::lang.plugin.name',
+                'label' => 'rainlab.builder::lang.plugin.manage_schemas']
+        ];
     }
 
     public function registerSettings()
