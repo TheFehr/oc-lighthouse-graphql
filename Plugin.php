@@ -17,6 +17,21 @@ class Plugin extends PluginBase
     public function boot()
     {
         App::register('\TheFehr\Lighthouse\Provider\LighthouseServiceProvider');
+        
+        App::error(function($e) {
+            if(preg_match('/direrror/',$e->getMessage())) {
+    				return 'The plugin directory does not exist and could not be created.';
+    	    }
+            if(preg_match('/yamlerror/',$e->getMessage())) {
+    				return 'The YAML content could not be created.';
+    	    }  
+            if(preg_match('/fileerror/',$e->getMessage())) {
+    				return 'The YAML file could not be opened.';
+    	    }    
+            if(preg_match('/writeerror/',$e->getMessage())) {
+    				return 'The YAML file could not be written.';
+    	    }     	    
+        });
     }
 
     public function registerSettings()
