@@ -9,6 +9,11 @@ use TheFehr\Lighthouse\Rules\ValidSchema;
 
 class Plugin extends PluginBase
 {
+    /**
+     * @var array Plugin dependencies
+     */
+    public $require = ['RainLab.Builder'];
+    
     public function boot()
     {
         App::register('\TheFehr\Lighthouse\Provider\LighthouseServiceProvider');
