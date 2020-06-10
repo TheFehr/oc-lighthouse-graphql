@@ -52,7 +52,9 @@ class ValidSchema implements Rule
             if (\File::exists($validFileBackupPath)) {
                 \File::move($validFileBackupPath, $validFilePath);
             }
-            throw new ValidationException([$attribute => "The defined schema is not valid:\n" . $definitionException->getMessage()]);
+            throw new ValidationException([
+                $attribute => "The defined schema is not valid:\n" . $definitionException->getMessage()
+                ]);
         }
 
         return $valid;

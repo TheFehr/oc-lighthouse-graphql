@@ -24,7 +24,9 @@ export const UIDiagramFull = style({
 });
 
 // @ts-ignore
-const schemaInput = document.getElementById(graphqlEditorValueId) as HTMLInputElement;
+const schemaInput = document.getElementById(graphqlEditorValueId) as HTMLTextAreaElement;
+// @ts-ignore
+__webpack_public_path__ = myRuntimePublicPath;
 
 export const App = () => {
     const [mySchema] = useState({
@@ -33,9 +35,7 @@ export const App = () => {
     });
     return (
         <div className={UiDiagram}>
-            <Editor schema={mySchema} graphController={controller => {
-                console.log(controller);
-            }}/>
+            <Editor schema={mySchema} />
         </div>
     );
 };

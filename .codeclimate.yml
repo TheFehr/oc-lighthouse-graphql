@@ -1,0 +1,10 @@
+plugins:
+  sonar-php:
+    enabled: true
+    config:
+      file_extensions: "php"
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      standard: "PSR1,PSR2"
