@@ -34,7 +34,6 @@ use Nuwave\Lighthouse\Console\SubscriptionCommand;
 use Nuwave\Lighthouse\Execution\LighthouseRequest;
 use Nuwave\Lighthouse\Schema\Source\SchemaStitcher;
 use Nuwave\Lighthouse\Console\ValidateSchemaCommand;
-//use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Nuwave\Lighthouse\Execution\MultipartFormRequest;
 use Illuminate\Validation\Factory as ValidationFactory;
 use Nuwave\Lighthouse\Support\Contracts\CreatesContext;
@@ -53,6 +52,7 @@ use Nuwave\Lighthouse\Support\Contracts\ProvidesSubscriptionResolver;
 
 use Illuminate\Support\ServiceProvider;
 use October\Rain\Config\Repository as ConfigRepository;
+use TheFehr\Lighthouse\Exceptions\GraphQLServerExcpetion;
 
 class LighthouseServiceProvider extends ServiceProvider
 {
@@ -63,8 +63,10 @@ class LighthouseServiceProvider extends ServiceProvider
      * @param  \Illuminate\Contracts\Config\Repository  $configRepository
      * @return void
      */
-    public function boot(ValidationFactory $validationFactory, \Illuminate\Contracts\Config\Repository $configRepository): void
-    {
+    public function boot(
+        ValidationFactory $validationFactory,
+        \Illuminate\Contracts\Config\Repository $configRepository
+    ): void {
         $this->publishes([
             __DIR__.'/../config/config.php' => $this->app->make('path.config').'/lighthouse.php',
         ], 'config');
@@ -148,7 +150,7 @@ class LighthouseServiceProvider extends ServiceProvider
             return new class implements ProvidesSubscriptionResolver {
                 public function provideSubscriptionResolver(FieldValue $fieldValue): Closure
                 {
-                    throw new Exception(
+                    throw new GraphQLServerExcpetion(
                         'Add the SubscriptionServiceProvider to your config/app.php to enable subscriptions.'
                     );
                 }
@@ -165,7 +167,7 @@ class LighthouseServiceProvider extends ServiceProvider
                 return new LumenMiddlewareAdapter($app);
             }
 
-            throw new Exception(
+            throw new GraphQLServerExcpetion(
                 'Could not correctly determine Laravel framework flavor, got '.get_class($app).'.'
             );
         });

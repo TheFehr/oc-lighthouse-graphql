@@ -7,8 +7,7 @@ class BuilderTableCreateUitLighthouseSchemes extends Migration
 {
     public function up()
     {
-        Schema::create('uit_lighthouse_schemes', function($table)
-        {
+        Schema::create('uit_lighthouse_schemes', function ($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');

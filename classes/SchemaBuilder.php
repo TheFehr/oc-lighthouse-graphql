@@ -1,12 +1,9 @@
 <?php
 
-
 namespace TheFehr\Lighthouse\Classes;
-
 
 use TheFehr\Lighthouse\Models\Schema;
 use TheFehr\Lighthouse\Models\Settings;
-
 
 class SchemaBuilder
 {

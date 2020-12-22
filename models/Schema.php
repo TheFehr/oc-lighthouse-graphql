@@ -42,7 +42,7 @@ class Schema extends Model
 
         if ($model->published) {
             Log::info("Validating schema");
-            Validator::extend('schemaValid', function ($attribute, $value, $parameters) use ($model) {
+            Validator::extend('schemaValid', function ($attribute, $value) use ($model) {
                 return (new ValidSchema())->validate($attribute, $value, [$model->id]);
             });
             $this->rules['schema'] = 'schemaValid';

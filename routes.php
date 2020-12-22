@@ -1,5 +1,5 @@
 <?php
-Route::group(config('thefehr.lighthouse::route', []), function () : void {
+Route::group(config('thefehr.lighthouse::route', []), function (): void {
     $routeName = config('thefehr.lighthouse::route_name', 'graphql');
     $controller = config('thefehr.lighthouse::controller');
 
@@ -13,6 +13,6 @@ Route::group(config('thefehr.lighthouse::route', []), function () : void {
     ]);
 });
 
- Route::get('graphql/schema.graphql', function(){
+ Route::get('graphql/schema.graphql', function () {
     return TheFehr\Lighthouse\Models\Settings::get('base_schema');
  });

@@ -20,7 +20,8 @@ class Settings extends Model
      */
     public $rules = [];
 
-    public function afterSave() {
+    public function afterSave()
+    {
         SchemaBuilder::build(Config::get('thefehr.lighthouse::schema.register'));
     }
 }
